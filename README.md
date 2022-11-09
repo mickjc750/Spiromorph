@@ -1,6 +1,8 @@
 # Spiromorph
 A morphing spirograph pattern.
 
+![](https://media.giphy.com/media/3YOzFAhrx1r4AJaCu5/giphy.gif)
+
 ## Requirements
 #install sdl2
 
