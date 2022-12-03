@@ -15,9 +15,9 @@
 	#include <stdbool.h>
 	#include <stdint.h>
 	#include <inttypes.h>
+	#include <math.h>
 
-	#include <SDL2/SDL.h>
-	#include <SDL2/SDL_timer.h>
+	#include <SDL.h>
 
 	#include "main.h"
 	#include "mainopt.h"
@@ -122,12 +122,13 @@ int main(int argc, char *argv[])
 
 static void spiromorph(void)
 {
-	uint32_t render_flags = SDL_RENDERER_ACCELERATED;
+	uint32_t render_flags = SDL_RENDERER_PRESENTVSYNC;
 	float 	frame_time;
 	float 	base_envelope = 0;
 	float 	envelope;
 	float 	second_time = 0;
 	int i;
+	int err;
 	int frame_cnt = 0;
 	bool finished = false;
 
@@ -136,7 +137,7 @@ static void spiromorph(void)
 	SDL_Event 		event; 
 
 	elements = malloc(sizeof(*elements)*options.number_of_elements);
-	envelopes = malloc(sizeof(*envelopes)*options.number_of_elements);
+	envelopes = calloc(sizeof(*envelopes), options.number_of_elements);
 	sin_table = malloc(sizeof(*sin_table)*options.base_resolution);
 	colour_table = malloc(sizeof(*colour_table)*options.base_resolution);
 
@@ -148,13 +149,14 @@ static void spiromorph(void)
 	while(i != options.number_of_elements)
 		elements[i++] = (struct element_struct){.amplitude=1, .freq=1, .phase_offset=0};
 
-	printf(MAIN_TITLE"  "MAIN_VERSION"  Mick Clift 2022\n");
+	SDL_Log(MAIN_TITLE"  "MAIN_VERSION"  Mick Clift 2022\n");
 
 	generate_sin_table();
 	envelope_init();
 	colour_table_init();
 
-	assert(SDL_Init(SDL_INIT_EVERYTHING) == 0);
+	err = SDL_Init(SDL_INIT_EVERYTHING);
+	assert(!err);
  
  	if(options.full_screen)
 		win = SDL_CreateWindow(MAIN_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, options.window_width, options.window_height, 0 + SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -199,7 +201,7 @@ static void spiromorph(void)
 		if(second_time > 1.0)
 		{
 			second_time = 0;
-			printf("fps = %i\n", frame_cnt);
+			SDL_Log("fps = %i\n", frame_cnt);
 			frame_cnt = 0;
 		};
 

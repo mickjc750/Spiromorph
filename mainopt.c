@@ -23,7 +23,7 @@
     #define EOL_DEFAULT "\n"
 
 //	Valid short options
-    #define VALIDOPTS	"Vhe:p:x:y:wa:"
+    #define VALIDOPTS	"Vhe:p:x:y:wa:f:s:"
 
 //	Short ID's for long options, avoid conflict with above characters
     #define OPT_VERSION			'V'
