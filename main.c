@@ -333,18 +333,17 @@ static void draw_frame(SDL_Renderer* rend)
 {
 	int base_angle = 0;
 
-	SDL_SetRenderDrawColor(rend, 0,0,0,SDL_ALPHA_OPAQUE);
-
-	SDL_RenderClear(rend);
 	draw_point_for_base_angle(rend, 0);
+	SDL_SetRenderDrawColor(rend, 0,0,0,SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(rend);
 
-	SDL_SetRenderDrawColor(rend, 255,255,255,SDL_ALPHA_OPAQUE);
 	base_angle = 1;
 	while(base_angle != options.base_resolution)
 	{
 		draw_point_for_base_angle(rend, base_angle);
 		base_angle++;
 	};
+	draw_point_for_base_angle(rend, 0);
 }
 
 static void draw_point_for_base_angle(SDL_Renderer* rend, int base_angle)
