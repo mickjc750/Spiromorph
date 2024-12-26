@@ -78,7 +78,7 @@ This program comes with ABSOLUTELY NO WARRANTY.\n\
     static struct mainopt_struct opt_defaults = 
     {
         .full_screen = false,
-        .number_of_elements = 5,
+        .number_of_elements = 4,
         .envelopes_in_phase = 2,
         .element_freq_max	= 8,
         .base_resolution = 1024,
